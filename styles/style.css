@@ -1,0 +1,151 @@
+
+@font-face {
+	font-family: 'Droid Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Droid Sans'), local('DroidSans-Regular'),
+	url(/fonts/droid-sans.woff) format('woff'),
+	url(/fonts/droid-sans.ttf) format('truetype');
+}
+
+html, body, canvas, #canvas {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: 'Droid Sans', arial, serif;
+}
+
+#systemLayer, #info, #loadingScreen {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#info {
+	visibility: hidden;
+	background-color: white;
+}
+
+#info img {
+	position:absolute;
+	height: 100%;
+	width: auto;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+}
+
+.box.horizTranslate {
+	-webkit-transition: 3s;
+	-moz-transition: 3s;
+	-ms-transition: 3s;
+	-o-transition: 3s;
+	transition: 3s;
+	margin-left: 50% !important;
+}
+
+.canvas, .systemLayer {
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+}
+
+#loadingScreen {
+	background-color: white;
+	background-image: url('/images/background3.jpg');
+	background-size: 100% 100%;
+}
+
+.loadingHeader {
+	text-align: center;
+	font-size: 56px;
+	width: 100%;
+	margin: auto;
+	position: absolute;
+	top: 40%;
+	-webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: fadein 3s; /* Firefox < 16 */
+	-ms-animation: fadein 3s; /* Internet Explorer */
+	-o-animation: fadein 3s; /* Opera < 12.1 */
+	animation: fadein 3s;
+}
+
+.helpingText {
+	padding: 20px;
+	font-size: 23px;
+	text-align: center;
+}
+
+#loadingText {
+	margin-top: 12px;
+	font-size: 20px;
+}
+
+@keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+#loadingBox {
+	text-align: center;
+	width: 100%;
+	margin: auto;
+	position: absolute;
+	top: 5%;
+	visibility: hidden;
+}
+
+.inlineLoadingBlock div {
+	display: inline;
+}
+
+#dotsBox {
+	display: inline;
+}
+
+.volumeBox .volume img {
+	width: 64px;
+	height: 64px;
+}
+
+.volumeBox {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	visibility: hidden;
+}
+
+.endScreen {
+	background-color: white;
+	background-image: url('/images/background2.jpg');
+	background-size: 100% 100%;
+	font-size: 56px;
+	width: 100%;
+	margin: auto;
+	position: absolute;
+	-webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: fadein 3s; /* Firefox < 16 */
+	-ms-animation: fadein 3s; /* Internet Explorer */
+	-o-animation: fadein 3s; /* Opera < 12.1 */
+	animation: fadein 3s;
+	text-align: center;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: none;
+}
+
+.volumeOn {
+	display: none;
+}
+
+.endScreen div {
+	padding-top: 20%;
+}

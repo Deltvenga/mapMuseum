@@ -2,465 +2,49 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Интерактивная экскурсия</title>
-	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+	 <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 <body>
-	<style>
-
-@font-face {
-    font-family: 'Droid Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Droid Sans'), local('DroidSans-Regular'),
-    	url(/fonts/droid-sans.woff) format('woff'),
-        url(/fonts/droid-sans.ttf) format('truetype');
-}
-
-html, body, canvas, #canvas {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: 'Droid Sans', arial;
-}
-
-#systemLayer, #info, #loadingScreen {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-}
-
-#info {
-	visibility: hidden;
-	background-color: white;
-}
-
-#info img {
-	position:absolute;
-	height: 100%;
-	width: auto;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    margin:auto;
-}
-
-.box.horizTranslate {
-	-webkit-transition: 3s;
-	-moz-transition: 3s;
-	-ms-transition: 3s;
-	-o-transition: 3s;
-	transition: 3s;
-	margin-left: 50% !important;
-}
-
-.canvas, .systemLayer {
-	-webkit-filter: blur(5px);
-	-moz-filter: blur(5px);
-	-o-filter: blur(5px);
-	-ms-filter: blur(5px);
-	filter: blur(5px);
-}
-
-#loadingScreen {
-	background-color: white;
-	background-image: url("images/background3.jpg");
-	background-size: 100% 100%;
-}
-
-.loadingHeader {
-	text-align: center;
-	font-size: 56px;
-	width: 100%;
-	margin: auto;
-	position: absolute;
-	top: 40%;
-	-webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 3s; /* Firefox < 16 */
-        -ms-animation: fadein 3s; /* Internet Explorer */
-         -o-animation: fadein 3s; /* Opera < 12.1 */
-            animation: fadein 3s;
-
-}
-
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-#loadingBox {
-	text-align: center;
-	font-size: 56px;
-	width: 100%;
-	margin: auto;
-	position: absolute;
-	top: 40%;
-	visibility: hidden;
-}
-
-#loadingBox div {
-	display: inline;
-}
-
-#dotsBox {
-	display: inline;
-}
-	</style>
 	<canvas id="canvas"></canvas>
 	<canvas id="systemLayer"></canvas>
 	<div id="info"></div>
 	<div id="loadingScreen">
-
 		<div class="loadingHeader" id="loadingHeader">
 			Добро пожаловать на интерактивную экскурсию Ирбитского историко-этнографического музея
 		</div>
 		<div id="loadingBox">
-			<div id="loadingText">Загрузка</div> <div id="dotsBox">...</div>
+			<div class="helpingText">Дорогие, друзья!<br>
+				<p>Чтобы начать виртуальную экскурсию по городу Ирбиту в годы Великой Отечественной войны, необходимо дождаться загрузки всех параметров программы.</p>
+				<p>Когда загрузится карта, на экране вы увидите красный сигнал локатора, который идет от первой иконки.</p>
+				<p>Если вы не увидели сигнал, можно его повторять, нажав на клавиатуре пробел.</p>
+				<p>Когда иконка найдена, необходимо кликнуть по ней левой кнопкой мыши, после чего загрузится информация о данном объекте.</p>
+				<p>После ознакомления с представленным изображением и текстом, нужно кликнуть мышью по любой части экрана, тогда вы снова окажетесь на карте Ирбита, где локатор приведет вас к следующей иконке и т.д.</p>
+				<p>Также, вы можете включить звуковую дорожку, кликнув на значок динамика.</p>
+				<p>Когда экскурсия закончится, на карте появятся все объекты, которые вы посетили.</p>
+				<p>Спасибо за участие! Ждем вас на других наших проектах.</div><br>
+			<div class="inlineLoadingBlock"><div id="loadingText">Загрузка</div> <div id="dotsBox">...</div></div>
 		</div>
 	</div>
 
+	<div class="volumeBox">
+		<div class="volumeOff volume" onclick="volumeOff()">
+			<img src="images/volumeOff.png" alt="Выключить звук">
+		</div>
+		<div class="volumeOn volume" onclick="volumeOn()">
+			<img src="/images/volume.png"  alt="Включить звук">
+		</div>
+	</div>
 
-	<!-- <script type="text/javascript" src="loading.js"></script> -->
-	<!-- <script type="text/javascript" src="main.js"></script> -->
+	<div class="endScreen">
+		<div>Спасибо за внимание! Приглашаем поучаствовать в других наших проектах.</div>
+	</div>
+
+
+	<script type="text/javascript" src="src/loading.js"></script>
+	<script type="text/javascript" src="src/main.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script type="text/javascript">
 
-var currentLoadingStep = 0;
-
-var loadingDictionary = [
-	"Загружаем карту Ирбита",
-	"Загружаем необходимые объекты",
-	"Загружаем историческую информацию",
-	"Загружаем фотографии",
-	"Загружено"
-]
-
-function loadImagesRecursive(id, callback) {
-	array[id].slide = new Image();
-	array[id].slide.src = 'images/slides/slide' + id + '.jpg';
-	if(id === 1) {
-		array[id].visible = true;
-		currentObject = array[id];
-	}
-	array[id].slide.onload = function(){
-		if(id < MAX_ICON_ID) {
-			loadImagesRecursive(++id, callback);
-		} else {
-			currentLoadingStep++;
-			callback();
-		}
-		
-	}
-}
-
-function loadIconRecursive(id, callback) {
-	array[id] = new EntityClass(id, objectsCoords[id-1][0], objectsCoords[id-1][1]);
-	array[id].icon = new Image();
-	array[id].icon.src = 'images/icons/' + id + '.png';
-	if(id === 1) {
-		array[id].visible = true;
-	}
-	array[id].icon.onload = function(){
-		if(id < MAX_ICON_ID) {
-			loadIconRecursive(++id, callback);
-		} else {
-			currentLoadingStep++;
-			loadIconHRecursive(1, callback);
-		}
-	}
-}
-
-function loadIconHRecursive(id, callback) {
-	array[id].iconH = new Image();
-	array[id].iconH.src = 'images/icons/' + id + 'h.png';
-	if(id === 1) {
-		array[id].visible = true;
-	}
-	array[id].iconH.onload = function(){
-		if(id < MAX_ICON_ID) {
-			loadIconHRecursive(++id, callback);
-		} else {
-			currentLoadingStep++;
-			loadImagesRecursive(1, callback);
-		}
-		
-	}
-}
-
-var requestAnimFrame = window.requestAnimationFrame ||
-				       window.webkitRequestAnimationFrame ||
-				       window.mozRequestAnimationFrame ||
-				       window.oRequestAnimationFrame ||
-				       window.msRequestAnimationFrame;
-
-var ZOOM_SCALE = 0.55;
-var ZOOM_STEP = 5;
-var MAX_ICON_ID = 32;
-var OBJECT_SIZE = 60;
-var targetZoom = ZOOM_SCALE;
-
-var objectsCoords = [[2865, 1954], [2873, 1999], [2922, 1972], [2932, 2019], [2839, 2156], [2516, 1657], [2196, 2158], [2071, 2163], [1225, 1481], [795, 1077], [1110, 895], [1441, 764], [1507, 735], [1710, 654], [1536, 500], [1659, 361], [1661, 70], [1788, 449], [1846, 692], [1847, 740], [1800, 755], [2014, 765], [2636, 1244], [2533, 1270], [1858, 1592], [1729, 1402], [1787, 1146], [1735, 799], [1685, 819], [1852, 913], [2046, 1358], [2094, 1372]];
-
-var imageData;
-
-var ctx;
-
-var isGrabbing = false;
-var startGrabbingCoords = {x: -1, y: -1}
-
-var mouseCoords = {x: -1, y: -1};
-
-var circleRadius = 0;
-
-var system_image;
-
-var array = [];
-
-var clickLocked = false;
-
-var currentObject;
-
-function EntityClass(id, x, y) {
-	this.icon;
-	this.id = id;
-	this.x = x;
-	this.y = y;
-	this.visible = false;
-	this.isHovered = false;
-	this.contains = function(x, y) {
-		return this.x - (OBJECT_SIZE/2) <= x && x <= this.x + (OBJECT_SIZE/2) &&
-       		   this.y - (OBJECT_SIZE/2) <= y && y <= this.y + (OBJECT_SIZE/2);
-	}
-
-	this.click = function() {
-		clickLocked = true;
-		$('#info').css('visibility', 'visible');
-		document.getElementById('info').innerHTML = "";
-		document.getElementById('info').append(this.slide);
-		$("#info").show();
-	}
-}
-var dotsInterval;
-
-function init() {
-	$(".loadingHeader").css('visibility', 'visible');
-	var canvas = document.getElementById('canvas');
-	canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-	ctx = canvas.getContext('2d');
-	dotsInterval = setInterval(loadingStep, 300);
-	var systemLayer = document.getElementById('systemLayer');
-
-	document.getElementById('loadingScreen').style.cursor = "wait";
-	systemLayer.height = window.innerHeight;
-    systemLayer.width = window.innerWidth;
-	sysCtx = systemLayer.getContext('2d');
-
-	base_image = new Image();
-    base_image.src = 'images/mainMap.jpg';
-    base_image.onload = function(){
-    	imageData = base_image;
-    	ctx.drawImage(base_image, 0, 0, base_image.width * ZOOM_SCALE, base_image.height * ZOOM_SCALE);
-
-    	system_image = new Image();
-    	system_image.src = 'images/pointMap.png';
-    	system_image.onload = function() {
-    		sysCtx.drawImage(system_image, 0, 0, system_image.width * ZOOM_SCALE, system_image.height * ZOOM_SCALE);
-    		currentLoadingStep++;
-    		loadIconRecursive(1, loop);
-    		playAudio();
-    	}
-
-    }
-}
-
-var translateCoords = {
-	x: -2243,
-	xPrev: -2243,
-	y: -1751,
-	yPrev: -1751
-};
-
-var circleStep = 1;
-
-function drawIcons() {
-	array.forEach(function(item) {
-		if(item.visible) {
-			if(item.isHovered) {
-				sysCtx.drawImage(item.iconH, item.x-(OBJECT_SIZE/2), item.y-(OBJECT_SIZE/2), OBJECT_SIZE, OBJECT_SIZE);
-			} else {
-				sysCtx.drawImage(item.icon, item.x-(OBJECT_SIZE/2), item.y-(OBJECT_SIZE/2), OBJECT_SIZE, OBJECT_SIZE);
-			}
-		}
-	})
-}
-
-
-function loop() {
-	currentLoadingStep = 5;
-	var currentCursor = "crosshair";
-	if(clickLocked) {
-		currentCursor = "default";
-	} else if(isGrabbing) {
-		currentCursor = "grab";
-	}
-	document.getElementById('systemLayer').style.cursor = currentCursor;
-	ctx.clearRect(0, 0, 2000, 2000);
-	sysCtx.clearRect(0, 0, 2000, 2000);
-	ctx.translate(translateCoords.x, translateCoords.y);
-	sysCtx.translate(translateCoords.x, translateCoords.y);
-
-	if(circleRadius < 4000) {
-
-		circleStep += 0.2;
-		sysCtx.beginPath();
-		sysCtx.lineWidth = 20-circleStep;
-		sysCtx.strokeStyle = "red";
-		sysCtx.arc(currentObject.x, currentObject.y, circleRadius+=circleStep, 0, 2 * Math.PI);
-
-		
-		sysCtx.stroke();
-		sysCtx.lineWidth = 1;
-	}
-	
-	ctx.drawImage(base_image, 0, 0, base_image.width * ZOOM_SCALE, base_image.height * ZOOM_SCALE);
-	ctx.translate(-translateCoords.x, -translateCoords.y);
-	drawIcons();
-	sysCtx.translate(-translateCoords.x, -translateCoords.y);
-	
-    requestAnimFrame(loop);
-}
-
-document.addEventListener('mousemove', function (e) {
-	mouseCoords.x = e.pageX;
-	mouseCoords.y = e.pageY;
-
-	
-	if(isGrabbing) {
-		translateCoords.x = translateCoords.xPrev+mouseCoords.x-startGrabbingCoords.x;
-		translateCoords.y = translateCoords.yPrev+mouseCoords.y-startGrabbingCoords.y;
-	}
-
-	array.forEach(function(item) {
-		var curX = -(translateCoords.x-mouseCoords.x);
-		var curY = -(translateCoords.y-mouseCoords.y);
-		if(item.contains(curX, curY)) {
-			item.isHovered = true;
-		} else {
-			item.isHovered = false;
-		}
-	})
-})
-
-var zoomDeltaCoords = {
-	x: 0,
-	y: 0
-}
-
-document.addEventListener('mousedown', function(e) {
-	isGrabbing = true;
-	startGrabbingCoords.x = e.pageX;
-	startGrabbingCoords.y = e.pageY;
-});
-
-
-var objectList = [];
-
-document.addEventListener('keyup', function(e) {
-	if(e.code === "Space") {
-		circleRadius = 0;
-		circleStep = 1;
-	}
-})
-
-function playAudio() {
-  var audio = new Audio('sound/background.mp3');
-  audio.volume = 0.1;
-  audio.play();
-}
-
-document.addEventListener('mouseup', function(e) {
-	isGrabbing = false;
-	translateCoords.xPrev = translateCoords.x;
-	translateCoords.yPrev = translateCoords.y;
-	var curX = -(translateCoords.x-mouseCoords.x);
-	var curY = -(translateCoords.y-mouseCoords.y);
-	if(clickLocked) {
-		$('#info').css('visibility', 'hidden');
-		clickLocked = false;
-		currentObject.visible = false;
-		currentObject = array[currentObject.id+1];
-		currentObject.visible = true;
-		circleRadius = 0;
-		circleStep = 1;
-	} else {
-		array.forEach(function(item) {
-			if(item.contains(curX, curY) && !clickLocked) {
-				if(item == currentObject) {
-					item.click();
-				}
-			}
-		});
-	}
-});	
-
-
-function animationListener() {
-	$("#loadingHeader").animate({
-    	opacity: "toggle"
-  	}, 2000, "linear", function() {
-    	$("#loadingHeader").text('Начинаем загрузку данных').animate({
-    		opacity: "toggle"
-    	}, 2000, 'linear', function() {
-    		$("#loadingHeader").text('Начинаем загрузку данных').animate({
-    		opacity: "toggle"
-	    	}, 2000, 'linear', function() {
-	    		$("#loadingHeader").css('visibility', 'hidden');
-	    		$("#loadingBox").css('visibility', 'visible');
-	    		init();
-	    	})
-    	})
-  	});
-}
-
-document.getElementById("loadingHeader").addEventListener("animationend", animationListener, false);
-
-
-
-function pointInCircle(x, y, cx, cy, radius) {
-	var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-	return distancesquared <= radius * radius;
-}
-
-var dotsCount = 1;
-
-function loadingStep() {
-	var dotsBox = "";
-	dotsCount++;
-	if(dotsCount > 3) dotsCount = 1;
-	for(var i = 1; i <= dotsCount; i++) {
-		dotsBox += ".";
-	}
-	for(var i = 3-dotsCount; i >= 1; i--) {
-		dotsBox += "<span style='color: white'>.</span>";
-	}
-	$('#loadingText').text(loadingDictionary[currentLoadingStep]);
-	if(currentLoadingStep == 5) {
-		document.getElementById('dotsBox').innerHTML = "";
-		clearInterval(dotsInterval);
-		$("#loadingScreen").animate({
-			opacity: "toggle"
-		}, 1000, "linear", function() {
-			$('#loadingScreen').css('visibility', 'hidden');
-		})
-	} else {
-		document.getElementById('dotsBox').innerHTML = dotsBox;
-	}
-	
-
-}
 
 
 

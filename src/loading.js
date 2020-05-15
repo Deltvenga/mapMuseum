@@ -1,23 +1,28 @@
-var loadingDictionary = [
+let currentLoadingStep = 0;
+
+let loadingDictionary = [
 	"Загружаем карту Ирбита",
-	"Загружаем расположение интересных мест",
+	"Загружаем необходимые объекты",
 	"Загружаем историческую информацию",
 	"Загружаем фотографии",
 	"Загружено"
 ]
+
 function loadImagesRecursive(id, callback) {
 	array[id].slide = new Image();
-	array[id].slide.src = 'images/slides/Слайд' + id + '.JPG';
+	array[id].slide.src = 'images/slides/slide' + id + '.jpg';
 	if(id === 1) {
 		array[id].visible = true;
+		currentObject = array[id];
 	}
 	array[id].slide.onload = function(){
 		if(id < MAX_ICON_ID) {
 			loadImagesRecursive(++id, callback);
 		} else {
+			currentLoadingStep++;
 			callback();
 		}
-		
+
 	}
 }
 
@@ -32,6 +37,7 @@ function loadIconRecursive(id, callback) {
 		if(id < MAX_ICON_ID) {
 			loadIconRecursive(++id, callback);
 		} else {
+			currentLoadingStep++;
 			loadIconHRecursive(1, callback);
 		}
 	}
@@ -47,9 +53,33 @@ function loadIconHRecursive(id, callback) {
 		if(id < MAX_ICON_ID) {
 			loadIconHRecursive(++id, callback);
 		} else {
+			currentLoadingStep++;
 			loadImagesRecursive(1, callback);
 		}
-		
+
 	}
 }
 
+function loadingStep() {
+	let dotsBox = "";
+	dotsCount++;
+	if(dotsCount > 3) dotsCount = 1;
+	for(let i = 1; i <= dotsCount; i++) {
+		dotsBox += ".";
+	}
+	for(let j = 3-dotsCount; j >= 1; j--) {
+		dotsBox += "<span style='color: white'>.</span>";
+	}
+	$('#loadingText').text(loadingDictionary[currentLoadingStep]);
+	if(currentLoadingStep === 5) {
+		document.getElementById('dotsBox').innerHTML = "";
+		clearInterval(dotsInterval);
+		$("#loadingScreen").animate({
+			opacity: "toggle"
+		}, 1000, "linear", function() {
+			$('#loadingScreen').css('visibility', 'hidden');
+		})
+	} else {
+		document.getElementById('dotsBox').innerHTML = dotsBox;
+	}
+}
