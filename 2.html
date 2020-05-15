@@ -1,0 +1,98 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+
+
+	<style>
+	    html, body, canvas, #canvas {
+	        margin: 0;
+	        padding: 0;
+	    }
+
+	    .modalTest {
+	    	position: absolute;
+	    	display: none;
+	    	margin: 0;
+	    	padding: 0;
+	    	top: 0;
+	    	left: 0;
+	    	bottom: 0;
+	    	right: 0;
+	    	background-color: grey;
+	    	z-index: 1;
+	    }
+
+
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<canvas id="canvas"></canvas>
+
+	<div class='modalTest'>
+		<h1>Тут будет картинка и текст</h1>
+		<a href="#" onclick="closeModal()">Закрыть это</a>
+	</div>
+
+	<script>
+
+		var canvas = document.getElementById('canvas');
+		canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+		var ctx = canvas.getContext('2d');
+
+		base_image = new Image();
+	    base_image.src = 'map.png';
+	    base_image.onload = function(){
+	    	ctx.drawImage(base_image, 0, 0);
+	    	ctx.drawImage(base_image, 0, 0, base_image.width,    base_image.height,     // source rectangle
+                   0, 0, canvas.width, canvas.height);
+	    	ctx.beginPath();
+			ctx.ellipse(100, 100, 25, 25, Math.PI / 4, 0, 2 * Math.PI);
+			ctx.fillStyle = "red";
+			ctx.fill();
+			ctx.stroke();
+	    }
+
+	    document.addEventListener("mousemove", function(e){
+		  	if(pointInCircle(e.pageX, e.pageY, 100, 100, 25)) {
+		  		ctx.ellipse(100, 100, 25, 25, Math.PI / 4, 0, 2 * Math.PI);
+				ctx.fillStyle = "red";
+				ctx.fill();		
+		  	} else {
+		  		ctx.ellipse(100, 100, 25, 25, Math.PI / 4, 0, 2 * Math.PI);
+			ctx.fillStyle = "green";
+			ctx.fill();
+		  	}
+		});
+
+		document.getElementById('canvas').addEventListener("click", function(e){
+		  	if(pointInCircle(e.pageX, e.pageY, 100, 100, 25)) {
+		  		 $(".modalTest").css('display', 'block').animate({
+    opacity: 1,
+    left: "+=50",
+  }, 1000, function() {
+    // Animation complete.
+  });
+		  	}
+		});
+
+		function closeModal() {
+			 $(".modalTest").css('display', 'none').animate({
+    opacity: 0,
+    left: "+=50",
+  }, 1000, function() {
+    // Animation complete.
+  });
+		}
+
+		function pointInCircle(x, y, cx, cy, radius) {
+			var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+			return distancesquared <= radius * radius;
+		}
+
+
+	</script>
+</body>
+
+</html>
