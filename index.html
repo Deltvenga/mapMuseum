@@ -312,13 +312,6 @@ function loop() {
 	ctx.translate(translateCoords.x, translateCoords.y);
 	sysCtx.translate(translateCoords.x, translateCoords.y);
 
-	
-
-	sysCtx.lineWidth = 1;
-	sysCtx.beginPath();
-	sysCtx.rect(-(translateCoords.x-mouseCoords.x)-20, -(translateCoords.y-mouseCoords.y)-20, 40, 40);
-	sysCtx.stroke();
-
 	if(circleRadius < 4000) {
 
 		circleStep += 0.2;
