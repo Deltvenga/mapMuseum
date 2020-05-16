@@ -48,7 +48,7 @@ html, body, canvas, #canvas {
 
 #loadingScreen {
 	background-color: white;
-	background-image: url('/images/background3.jpg');
+	background-image: url('images/background3.jpg');
 	background-size: 100% 100%;
 }
 
@@ -113,7 +113,7 @@ html, body, canvas, #canvas {
 
 .endScreen {
 	background-color: white;
-	background-image: url('/images/background2.jpg');
+	background-image: url('images/background2.jpg');
 	background-size: 100% 100%;
 	font-size: 56px;
 	width: 100%;
@@ -133,7 +133,7 @@ html, body, canvas, #canvas {
 }
 
 .volumeOn {
-	display: block;
+	display: none;
 }
 
 .endScreen div {
