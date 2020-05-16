@@ -1,18 +1,8 @@
-
-@font-face {
-	font-family: 'Droid Sans';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Droid Sans'), local('DroidSans-Regular'),
-	url(/fonts/droid-sans.woff) format('woff'),
-	url(/fonts/droid-sans.ttf) format('truetype');
-}
-
 html, body, canvas, #canvas {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	font-family: 'Droid Sans', arial, serif;
+	font-family: arial, serif;
 }
 
 #systemLayer, #info, #loadingScreen {
@@ -143,7 +133,7 @@ html, body, canvas, #canvas {
 }
 
 .volumeOn {
-	display: none;
+	display: block;
 }
 
 .endScreen div {
