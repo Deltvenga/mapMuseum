@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b1c7e82-cb50-4f30-8d52-5314ecf152ad" name="Default Changelist" comment="fixes">
+    <list default="true" id="1b1c7e82-cb50-4f30-8d52-5314ecf152ad" name="Default Changelist" comment="added metrika">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589561804378</updated>
-      <workItem from="1589561810417" duration="8751000" />
+      <workItem from="1589561810417" duration="11149000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <created>1589611216731</created>
@@ -83,7 +83,28 @@
       <option name="project" value="LOCAL" />
       <updated>1589611571823</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fixes">
+      <created>1589612014415</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1589612014415</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix help">
+      <created>1589633409978</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1589633409978</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added metrika">
+      <created>1589738555153</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1589738555153</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,13 +124,15 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="fix help" />
+    <MESSAGE value="added metrika" />
+    <option name="LAST_COMMIT_MESSAGE" value="added metrika" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1589611579272">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1589738562768">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1589611579272" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1589738562768" />
     <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589611200228">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
